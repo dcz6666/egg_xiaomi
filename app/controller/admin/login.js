@@ -9,7 +9,8 @@ class LoginController extends BaseController {
   }
 
   async doLogin() {
-    await this.success('/admin/login') 
+    console.log("this.ctx.request.body",this.ctx.request.body)
+    // await this.success('/admin/login') 
  }
 }
 
