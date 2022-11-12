@@ -1,6 +1,7 @@
 'use strict';
 
 var svgCaptcha = require('svg-captcha');
+var md5 =require('md5')
 const Service = require('egg').Service;
 
 class ToolsService extends Service {
@@ -8,7 +9,7 @@ class ToolsService extends Service {
         const { ctx } = this
         const captcha = svgCaptcha.create(
             {
-                size: 6,
+                size: 4,
                 fontSize: 50,
                 width: 100,
                 height: 40,
@@ -16,6 +17,9 @@ class ToolsService extends Service {
             });
         ctx.session.code = captcha.text;   //验证码上的文字
         return captcha
+    }
+    async md5(str){
+        return md5(str)
     }
 }
 

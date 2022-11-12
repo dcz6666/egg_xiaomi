@@ -1,4 +1,5 @@
 let url = require('url')
+
 module.exports = options=>{
     return async function adminauth(ctx,next){
         console.log("==================adminauth")
@@ -10,6 +11,7 @@ module.exports = options=>{
 
         let pathname =url.parse(ctx.request.url).pathname;
         if(ctx.session.userinfo){ //登录
+            ctx.state.userinfo=ctx.session.userinfo;  //全局变量  
             await next()
         }else{
             //排除不需要做权限判断的页面 
