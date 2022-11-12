@@ -3,25 +3,33 @@
 const Controller = require('egg').Controller;
 
 class BaseController extends Controller {
-  async success(redirectUrl,message) {
+  async success(redirectUrl, message) {
     await this.ctx.render('admin/public/success', {
       redirectUrl: redirectUrl,
-      message:message|| '操作成功！'
+      message: message || '操作成功！'
     })
   }
 
-  async error(redirectUrl,message) {
+  async error(redirectUrl, message) {
     await this.ctx.render('admin/public/error', {
       redirectUrl: redirectUrl,
-      message:message|| '操作失败！'
+      message: message || '操作失败！'
     })
   }
 
   async verify() {
-    let {ctx} = this;
+    let { ctx } = this;
     var captcha = await this.service.tools.captcha()  //服务里面的方法
     ctx.response.type = 'image/svg+xml'; //指定返回的类型
     ctx.body = captcha.data;  //给页面返回一张图
+  }
+
+  async delete() {
+    let { ctx } = this;
+    let { model, id } = ctx.request.query;
+    var result = await ctx.model[model].deleteOne({ "_id": id })
+    console.log("result", result);
+    ctx.redirect(this.ctx.state.prevPage);
   }
 }
 
