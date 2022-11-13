@@ -20,7 +20,7 @@ module.exports = app => {
   router.get('/admin/manager/edit', controller.admin.manager.edit);
 
   router.post('/admin/manager/doAdd', controller.admin.manager.doAdd);
-
+  router.post('/admin/manager/doEdit', controller.admin.manager.doEdit);
 
   router.get('/admin/role', controller.admin.role.index);
   router.get('/admin/role/add', controller.admin.role.add);
