@@ -21,6 +21,10 @@ class ToolsService extends Service {
     async md5(str){
         return md5(str)
     }
+    async getTime(){
+        var d= new Date();
+        return d.getTime()
+    }
 }
 
 module.exports = ToolsService;

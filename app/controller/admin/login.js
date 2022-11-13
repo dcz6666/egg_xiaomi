@@ -9,15 +9,9 @@ class LoginController extends BaseController {
   }
 
   async doLogin() {
-    // var result=await this.ctx.model.Admin.find({"username":'zhangsan',"password":'123456'});
-    // console.log("==result===", result)
-    // await this.ctx.render('admin/manager')
-    // this.ctx.body = "角色删除"
-    // return;
-
+ 
     let { username, password, code } = this.ctx.request.body;
-    // password = await this.service.tools.md5(password)
-    console.log("this.ctx.request.body:", this.ctx.request.body)
+    password = await this.service.tools.md5(password)
     if (code.toUpperCase() === this.ctx.session.code.toUpperCase()) {
       console.log(username,password);
       var result=await this.ctx.model.Admin.find({"username":username,"password":password});

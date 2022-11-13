@@ -16,7 +16,7 @@ module.exports = app => {
         default: d.getTime()
     
        },
-       is_super: { type:Number}  
+       is_super: { type:Number,default:0}   //是否是超级管理员 1 表示超级管理员
 
     });
 
