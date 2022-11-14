@@ -42,7 +42,6 @@ class RoleController extends BaseController {
         }else{
             await this.success('/admin/role',"编辑角色失败")
         }
-       
     }
 
 }
