@@ -30,13 +30,19 @@ class AccessController extends BaseController {
     }
     async add() {
         var result = await this.ctx.model.Access.find({ "module_id": "0" });
-        console.log("===reuslt===", result)
         await this.ctx.render('admin/access/add', {
             moduleList: result
         })
     }
     async edit() {
-        await this.ctx.render('admin/access/edit')
+        let{id} =this.ctx.request.query
+        //获取编辑的数据
+        var accessResult = await this.ctx.model.Access.find({"_id":id});
+        var result = await this.ctx.model.Access.find({ "module_id": "0" });
+        await this.ctx.render('admin/access/edit',{
+            moduleList: result,
+            list:accessResult[0]
+        })
     }
 
     async delete() {
@@ -55,6 +61,22 @@ class AccessController extends BaseController {
         access.save();
         await this.success('/admin/access', '增加权限成功');
     }
+
+    async doEdit(){
+        let updateResult = this.ctx.request.body;
+        let {id,module_id} = updateResult;
+         //菜单 或者操作
+         if (module_id != 0) {
+            updateResult.module_id = this.app.mongoose.Types.ObjectId(module_id);  //调用mongoose里面的方法把字符串转换成ObjectId
+        }
+        var result = await this.ctx.model.Access.updateOne({"_id":id},updateResult)
+        if(result){
+            await this.success('/admin/access',"修改权限成功")
+        }else{
+            await this.success('/admin/access',"修改权限失败")
+        }
+    }
+
 }
 
 module.exports = AccessController;
