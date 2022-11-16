@@ -44,6 +44,47 @@ class RoleController extends BaseController {
         }
     }
 
+    async auth() {
+        var role_id=this.ctx.request.query.id;
+        var result=await this.ctx.model.Access.aggregate([
+            {
+              $lookup:{
+                from:'access',
+                localField:'_id',
+                foreignField:'module_id',
+                as:'items'      
+              }      
+          },
+          {
+              $match:{
+                "module_id":'0'
+              }
+          }
+        
+        ])
+
+        await this.ctx.render('admin/role/auth',{
+            list:result,
+            role_id:role_id
+          });
+    }
+
+    async doAuth(){
+        let { role_id,access_node} = this.ctx.request.body;
+        //1、删除当角色下面的所有权限
+        await this.ctx.model.RoleAccess.deleteMany({"role_id":role_id})
+
+        //给role_access增加数据 把获取的权限和角色增加到数据库
+        for(var i=0;i<access_node.length;i++){
+            var roleAccessData= new this.ctx.model.RoleAccess({
+                role_id:role_id,
+                access_id:access_node[i]
+            })
+            roleAccessData.save()
+        }
+        await this.success('/admin/role/auth?id='+role_id,"授权成功")
+    }
+
 }
 
 module.exports = RoleController;
