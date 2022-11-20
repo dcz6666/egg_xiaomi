@@ -1,5 +1,6 @@
 'use strict';
 
+const role = require('../../model/role');
 var BaseController = require('./base');
 
 class RoleController extends BaseController {
@@ -46,23 +47,9 @@ class RoleController extends BaseController {
 
     async auth() {
         var role_id=this.ctx.request.query.id;
-        var result=await this.ctx.model.Access.aggregate([
-            {
-              $lookup:{
-                from:'access',
-                localField:'_id',
-                foreignField:'module_id',
-                as:'items'      
-              }      
-          },
-          {
-              $match:{
-                "module_id":'0'
-              }
-          }
-        
-        ])
-
+        let result = await this.service.admin.getAuthList(role_id);
+    console.log("==role_id===",role_id);
+    console.log("====result===",result);
         await this.ctx.render('admin/role/auth',{
             list:result,
             role_id:role_id

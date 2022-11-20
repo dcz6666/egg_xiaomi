@@ -15,7 +15,7 @@ class LoginController extends BaseController {
     if (code.toUpperCase() === this.ctx.session.code.toUpperCase()) {
       console.log(username,password);
       var result=await this.ctx.model.Admin.find({"username":username,"password":password});
-      console.log("==result===", result)
+      console.log("==result===1", result)
       if (result.length > 0) {
         // 保存用户信息
         this.ctx.session.userinfo = result[0];

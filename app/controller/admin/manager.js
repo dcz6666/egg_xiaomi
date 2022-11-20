@@ -14,6 +14,7 @@ class ManagerController extends BaseController {
                 as:'role'
             }
         }])
+        console.log("result===456",result)
         await this.ctx.render('admin/manager/index', {
             list:result
         }) 
@@ -56,7 +57,7 @@ class ManagerController extends BaseController {
         if(password){
             //修改密码
             password = await this.service.tools.md5(password);
-            this.ctx.model.Admin.updateOne({"_id":id},{
+            await this.ctx.model.Admin.updateOne({"_id":id},{
                 password:password,
                 mobile:mobile,
                 email:email,
