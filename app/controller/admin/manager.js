@@ -14,7 +14,7 @@ class ManagerController extends BaseController {
                 as:'role'
             }
         }])
-        console.log("result===456",result)
+        // console.log("result===456",result)
         await this.ctx.render('admin/manager/index', {
             list:result
         }) 

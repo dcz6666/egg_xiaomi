@@ -34,9 +34,9 @@ class AdminService extends Service {
 
     //4、判断当前访问的url 对应的权限id 是否在权限列表中的id中
     var accessUrlResult = await this.ctx.model.Access.find({"url":pathname});
-    console.log("=====pathname===",pathname);
-    console.log("==accessUrlResult==",accessUrlResult);
-    console.log("===accessArray==",accessArray)
+    // console.log("=====pathname===",pathname);
+    // console.log("==accessUrlResult==",accessUrlResult);
+    // console.log("===accessArray==",accessArray)
     if(accessUrlResult.length>0){
         if(accessArray.indexOf(accessUrlResult[0]._id.toString())!=-1){
             return true;

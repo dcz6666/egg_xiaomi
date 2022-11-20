@@ -1,5 +1,6 @@
 'use strict';
 
+
 const Controller = require('egg').Controller;
 
 class BaseController extends Controller {
@@ -30,6 +31,37 @@ class BaseController extends Controller {
     var result = await ctx.model[model].deleteOne({ "_id": id })
     console.log("result", result);
     ctx.redirect(this.ctx.state.prevPage);
+  }
+
+
+  //改变状态的方法
+  async changStatus(){
+
+    let {model,attr,id} = this.ctx.request.query;
+    console.log("===this.ctx.request.query===改变状态的方法",this.ctx.request.query)
+    var result = await this.ctx.model[model].find({"_id":id});
+    if(result.length>0){
+      if(result[0][attr]==1){
+        var json={
+          [attr]:0
+        }
+      }else{
+        var json={
+          [attr]:1
+        }
+      }
+      //执行更新操作
+      var updateResult = await this.ctx.model[model].updateOne({"_id":id},json)
+      if(updateResult){
+        this.ctx.body={"message":"更新成功","success":true}
+      }else{
+        this.ctx.body={"message":"更新成功","success":false}
+      }
+
+    }else{
+      //接口
+      this.ctx.body= {"message":"更新失败，参数错误","success":false}
+    }
   }
 }
 
