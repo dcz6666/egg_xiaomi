@@ -15,6 +15,8 @@ module.exports = appInfo => {
   // use for cookie sign key, should change to your own and keep security
   config.keys = appInfo.name + '_1667862712707_5754';
 
+  config.uploadDir='app/public/admin/upload';
+
   config.session = {
     key: 'SESSION_ID',
     maxAge: 100 * 1000 * 60,
@@ -36,6 +38,10 @@ module.exports = appInfo => {
       '.html': 'ejs',
     }
   };
+
+  config.multipart={
+    whitelist:['.png']   //覆盖整个白名单，只允许上传‘.png’格式
+  }
 
   //第二种推荐配置方式
   exports.mongoose = {
