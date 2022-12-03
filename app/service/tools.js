@@ -4,6 +4,7 @@ var svgCaptcha = require('svg-captcha');
 var md5 = require('md5')
 var sd = require('silly-datetime')
 var path = require('path')
+var Jimp = require('jimp');
 
 const mkdirp = require('mz-modules/mkdirp');
 
@@ -34,19 +35,27 @@ class ToolsService extends Service {
     async getUploadFile(filename){
         //获取当前日期
         var day = sd.format(new Date(),'YYYMMDD');
-        console.log("day",day);
         //创建图片保存的路径
         var dir = path.join(this.config.uploadDir,day);
-        console.log("dir",dir)
         await mkdirp(dir)
         var d= await this.getTime()   /**毫秒数 */
         //返回图片保存的路径
         var uploadDir = path.join(dir,d+path.extname(filename));
-        console.log("==uploadDir==",uploadDir);
         return {
             uploadDir:uploadDir,
             saveDir:uploadDir.slice(3).replace(/\\/g,'/')
         }
+    }
+    
+    //    上传图片成功后生成缩略图
+    async jimpImg(target){
+         Jimp.read(target,(err,lenna)=>{
+            if(err) throw err;
+            lenna.resize(200,200) //resize
+            .quality(60)   //set JPEG quality
+            // .greyscale()  //set greyscale
+            .write(target+'_200x200'+path.extname(target))
+        })
     }
 }
 

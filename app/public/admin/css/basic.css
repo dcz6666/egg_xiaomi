@@ -3,7 +3,26 @@ ul{
     margin: 0px;
     padding: 0px;
 }
-
+.fr{
+    float:right;
+}
+.fl{
+    float: left;
+}
+.clear::after{
+    clear: both;
+    content: "";
+    height: 0;
+    display: block;
+}
+.input{
+    width:600px;
+}
+.form_input span{
+    display: inline-block;
+    text-align: right;
+    width: 100px;
+}
 .aside h4{
 	margin-top: 0px;
 	font-size: 15px;
