@@ -53,7 +53,7 @@ class GoodsCateController extends BaseController {
             files = Object.assign(files, {
                 [fieldname]: dir.saveDir
             })
-
+            //生成缩略图
             await this.service.tools.jimpImg(target)
         }
         //  表示把字符串的分类id 转换成 objectId
