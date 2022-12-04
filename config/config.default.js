@@ -51,6 +51,18 @@ module.exports = appInfo => {
     },
   };
 
+  exports.security ={
+    csrf:{
+      //判断是否需要ignore的方法 请求上下文 context 作为第一个参数
+      ignore:ctx=>{
+        if(ctx.request.url=='/admin/goods/goodsUploadImage'){
+          return true
+        }
+        return false
+      }
+    }
+  }
+
   // add your user config here
   const userConfig = {
     // myAppName: 'egg',
