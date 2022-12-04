@@ -21,7 +21,11 @@ module.exports = app => {
       sub_title: { type: String  },          /*seo相关的标题  关键词  描述*/
       keywords: { type: String  },
       description: { type: String },      
-      status: { type: Number,default:1  },    
+      status: { type: Number,default:1  },  
+      sort:{
+        type:Number,
+        default:100
+      },  
       add_time: {           
         type:Number,        
         default: d.getTime()    

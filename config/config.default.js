@@ -56,7 +56,10 @@ module.exports = appInfo => {
     // myAppName: 'egg',
   };
 
-
+  //配置表单数量
+exports.multipart={
+  fields:'50'
+}
 
   return {
     ...config,
